@@ -9,10 +9,16 @@ module.exports.registerService = async (details) => {
         user_name: details.user_name,
       });
       if (email) {
-        throw new Error("Email already exists");
+        return {
+            error: "Email already exists",
+            status: 400,
+          };
       }
       if (userName) {
-        throw new Error("Username already exists");
+    return {
+            error: "Username already exists",
+            status: 400,
+          };
       }
 
       const saltRounds = 10;
@@ -30,6 +36,9 @@ module.exports.registerService = async (details) => {
       throw new Error("All Required Fields");
     }
   } catch (error) {
-    throw error;
+    return {
+        error: error.message,
+        status: 500,
+      };
   }
 };
