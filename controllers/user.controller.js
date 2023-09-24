@@ -10,13 +10,24 @@ const registerController = async (req, res) => {
       res.json({ message: "Register User", data: user });
     }
   } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(err.status).json({ error: err.error });
   }
 };
 
 const loginUserController = async (req, res) => {
-  res.json({ message: "Login User" });
+  try{
+     const user = await userService.loginService(req.body);
+  if(user.error){
+    res.status(user.status).json({ error: user.error });
+  }
+  else{
+    res.status(200).json({message : "login Successful" ,data : user});
+  }
+  }
+  catch(err){
+    res.status(err.status).json({ error: err.error });
+  }
+ 
 };
 
 const currentUserController = async (req, res) => {
