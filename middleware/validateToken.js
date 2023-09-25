@@ -12,7 +12,6 @@ module.exports.validateToken = async (req , res , next) => {
             else {
                 // If token is valid, you can optionally store the decoded data in the request for later use
                 req.user = decoded;
-                console.log(decoded);
                 next(); // Call next to pass control to the next middleware or route handler
               }
         });
