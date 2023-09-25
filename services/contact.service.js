@@ -26,9 +26,20 @@ module.exports.getAllContacts = (req) => {
     }
   };
 
-  module.exports.updateContact = async (id, details) => {
+  module.exports.updateContact = async (req, details) => {
     try {
-      const data = await userModel.findByIdAndUpdate(id, details, {
+      const contact = await model.findById(req.params.id);
+      if(!contact) {
+        return {
+          error : 'Contact not found'
+        }
+      }
+      if(req.user.userExist.id !== contact.user_id.toString()) {
+        return {
+          error :"user don't have permission to edit this contact"
+        }
+      }
+      const data = await model.findByIdAndUpdate(req.params.id, details, {
         new: true,
       });
       return data;
@@ -38,10 +49,21 @@ module.exports.getAllContacts = (req) => {
     }
   };
 
-  module.exports.deleteContact = async (id) => {
+  module.exports.deleteContact = async (req) => {
     try {
-      const data = await userModel.findByIdAndDelete(id);
-      return true;
+      const contact = await model.findById(req.params.id);
+      if(!contact) {
+        return {
+          error : 'Contact not found'
+        }
+      }
+      if(req.user.userExist.id !== contact.user_id.toString()) {
+        return {
+          error :"user don't have permission to delete this contact"
+        }
+      }
+      const data = await model.findByIdAndDelete(req.params.id);
+      return data;
     } catch (error) {
       console.error("An error occurred during user Delete:", error);
       throw error;
