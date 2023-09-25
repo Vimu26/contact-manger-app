@@ -38,3 +38,13 @@ module.exports.getAllContacts = () => {
     }
   };
 
+  module.exports.deleteContact = async (id) => {
+    try {
+      const data = await userModel.findByIdAndDelete(id);
+      return true;
+    } catch (error) {
+      console.error("An error occurred during user Delete:", error);
+      throw error;
+    }
+  };
+
