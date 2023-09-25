@@ -21,17 +21,16 @@ const loginUserController = async (req, res) => {
     res.status(user.status).json({ error: user.error });
   }
   else{
-    res.status(200).json({message : "login Successful" ,data : user});
+    res.status(200).json({message : "login Successful" , data : user});
   }
   }
   catch(err){
     res.status(err.status).json({ error: err.error });
-  }
- 
+  } 
 };
 
 const currentUserController = async (req, res) => {
-  res.json({ message: "Current User" });
+  res.json({ message: "Current User" , data : req.user });
 };
 
 module.exports = {

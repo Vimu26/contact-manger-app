@@ -47,11 +47,25 @@ const updateContact = async (req, res) => {
 
 };
 
-// const deleteContact;
+ const deleteContact = async (req, res) => {
+  try {
+    const success = await contactService.deleteContact(
+      req.params.id,
+    );
+    if (success) {
+      res.json({ status: true, message: " Deleted Successfully" });
+    } else {
+      res.json({ status: false, message: " Not Deleted" });
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+    res.status(500).json({ status: false, message: "An error occurred" });
+  }
+ };
 
 module.exports = {
   getAllContacts,
   createContact,
   updateContact,
-//   deleteContact,
+  deleteContact,
 };

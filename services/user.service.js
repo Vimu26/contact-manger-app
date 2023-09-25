@@ -6,21 +6,21 @@ module.exports.registerService = async (details) => {
   try {
     if (details.user_name || details.email || details.password) {
       const email = await userModel.findOne({ email: details.email });
-      const userName = await userModel.findOne({
-        user_name: details.user_name,
-      });
+    //   const userName = await userModel.findOne({
+    //     user_name: details.user_name,
+    //   });
       if (email) {
         return {
           error: "Email already exists",
           status: 400,
         };
       }
-      if (userName) {
-        return {
-          error: "Username already exists",
-          status: 400,
-        };
-      }
+    //   if (userName) {
+    //     return {
+    //       error: "Username already exists",
+    //       status: 400,
+    //     };
+    //   }
 
       const saltRounds = 10;
       const salt = await bcrypt.genSalt(saltRounds);
@@ -56,7 +56,7 @@ module.exports.loginService = async (data) => {
       }
       //compare the email and password
       if(userExist && (await bcrypt.compare(data.password, userExist.password))){
-        const accessToken = await jwt.sign({
+        const accessToken = jwt.sign({
             userExist : {
                 user_name : userExist.user_name,
                 email : userExist.email,
