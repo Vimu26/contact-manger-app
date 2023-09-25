@@ -62,7 +62,7 @@ module.exports.loginService = async (data) => {
                 email : userExist.email,
                 id : userExist.id,
             }
-        },process.env.ACCESS_TOKEN_SECRET , {expiresIn : "1m"});
+        },process.env.ACCESS_TOKEN_SECRET , {expiresIn : "45m"});
         return accessToken
       }
 

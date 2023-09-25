@@ -1,8 +1,8 @@
 const model = require("../models/contact.model")
 
-module.exports.getAllContacts = () => {
-    return model.find().then((contacts) => {
-      if (users.length === 0) {
+module.exports.getAllContacts = (req) => {
+    return model.find({user_id : req.user.userExist.id}).then((contacts) => {
+      if (contacts.length === 0) {
         console.log("No contacts found");
       }
       return contacts;
@@ -14,14 +14,14 @@ module.exports.getAllContacts = () => {
   module.exports.createContact = async (details) => {
     try {
       const data = new model({
-        name: details.name,
-        contact_number: details.contact_number,
-        email: details.email,
+        user_id : details.user.userExist.id,
+        name: details.body.name,
+        contact_number: details.body.contact_number,
+        email: details.body.email,
       });
       await data.save();
       return data;
     } catch (error) {
-      console.error(error);
       throw error;
     }
   };
