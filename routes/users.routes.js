@@ -5,7 +5,7 @@ module.exports = router;
 const userController = require('../controllers/user.controller');
 const validateToken = require('../middleware/validateToken');
 
-// router.get("/",userController.getDataControllersFunction);
+router.get("/",userController.getAllUserController);
 // router.get("/:id",userController.getUserControllersFunction);
 router.post("/register",userController.registerController);
 router.post("/login",userController.loginUserController);

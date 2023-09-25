@@ -11,7 +11,7 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
-  .then(() => console.log("Database Connected Successfully!!"))
+  .then(() => console.log("MongoDB Database Connected Successfully!!"))
   .catch((err) => {
     console.error(err);
   });
@@ -23,11 +23,11 @@ server.use(express.json());
 server.use("/users",users);
 server.use("/contacts",contacts);
 
-server.listen(3500, function check(error) {
+server.listen(process.env.PORT, function check(error) {
   if (error) {
-    console.error(error);
+    console.error(error.message);
   } else {
-    console.log("Express Started Successfully");
+    console.log(`Api Started Successfully in Port ${process.env.PORT}!`);
   }
 });
 
