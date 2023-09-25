@@ -80,3 +80,20 @@ module.exports.loginService = async (data) => {
     };
   }
 };
+
+module.exports.getAllUsers = async () => {
+  try{
+    const users = await userModel.find();
+    if(users.length ===0 ){
+      return {
+        error : 'No users found',
+      }
+    }
+    else {
+      return users;
+    }
+  }
+  catch(error){
+    throw error;
+  }
+}

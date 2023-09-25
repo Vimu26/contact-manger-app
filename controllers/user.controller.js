@@ -1,5 +1,24 @@
 const userService = require("../services/user.service");
 
+const getAllUserController = async (req,res) => {
+try{
+ const user = await userService.getAllUsers();
+ if(user.error){
+  res.json({status:false , error : user.error});
+ }
+ else {
+  res.json({status:true , message : "users found successfully" , data : user });
+ }
+ 
+}
+catch(err){
+  res
+      .status(500)
+      .json({ status: false, message: err.message });
+}
+
+};
+
 const registerController = async (req, res) => {
   try {
     const user = await userService.registerService(req.body);
@@ -37,4 +56,5 @@ module.exports = {
   registerController,
   loginUserController,
   currentUserController,
+  getAllUserController,
 };
