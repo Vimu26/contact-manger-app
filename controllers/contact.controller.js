@@ -30,15 +30,15 @@ const createContact = async (req, res) => {
 
 const updateContact = async (req, res) => {
     try {
-        const success = await contactService.updateContact(
-          req.params.id,
+        const contact = await contactService.updateContact(
+          req,
           req.body
         );
     
-        if (success) {
-          res.json({ status: true, message: " Updated Successfully" , data :success });
+        if (contact.error) {
+          res.json({ status: false, message: contact.error });
         } else {
-          res.json({ status: false, message: " Not Updated" });
+          res.json({ status: true, message: " Updated Successfully" , data : contact });
         }
       } catch (error) {
         console.error("An error occurred:", error);
@@ -50,12 +50,12 @@ const updateContact = async (req, res) => {
  const deleteContact = async (req, res) => {
   try {
     const success = await contactService.deleteContact(
-      req.params.id,
+      req
     );
-    if (success) {
-      res.json({ status: true, message: " Deleted Successfully" });
+    if (success.error) {
+       res.json({ status: false, message: " Not Deleted" });
     } else {
-      res.json({ status: false, message: " Not Deleted" });
+     res.json({ status: true, message: " Deleted Successfully" });
     }
   } catch (error) {
     console.error("An error occurred:", error);
