@@ -1,6 +1,7 @@
 const userModel = require("../models/user.model");
-const jwt = require("jsonwebtoken");
 const passwordService = require("../services/password.service");
+const tokenService = require("../services/token.service");
+const bcrypt = require("bcrypt");
 
 module.exports.registerService = async (details) => {
   try {
@@ -21,10 +22,7 @@ module.exports.registerService = async (details) => {
       //       status: 400,
       //     };
       //   }
-
-      const hashPassword = await passwordService.hashPassword(
-        details.password
-      );
+      const hashPassword = await passwordService.hashPassword(details.password);
 
       const user = new userModel({
         user_name: details.user_name,
@@ -46,7 +44,7 @@ module.exports.registerService = async (details) => {
 
 module.exports.loginService = async (data) => {
   try {
-    if (data.email || data.password) {
+    if (data.email && data.password) {
       const userExist = await userModel.findOne({ email: data.email });
       if (!userExist) {
         return {
@@ -59,17 +57,7 @@ module.exports.loginService = async (data) => {
         userExist &&
         (await bcrypt.compare(data.password, userExist.password))
       ) {
-        const accessToken = jwt.sign(
-          {
-            userExist: {
-              user_name: userExist.user_name,
-              email: userExist.email,
-              id: userExist.id,
-            },
-          },
-          process.env.ACCESS_TOKEN_SECRET,
-          { expiresIn: "15m" }
-        );
+        const accessToken = await tokenService.generateToken(userExist);
         return accessToken;
       }
     } else {
@@ -88,16 +76,6 @@ module.exports.loginService = async (data) => {
 };
 
 module.exports.getAllUsers = async () => {
-  try {
-    const users = await userModel.find();
-    if (users.length === 0) {
-      return {
-        error: "No users found",
-      };
-    } else {
-      return users;
-    }
-  } catch (error) {
-    throw error;
-  }
+  const users = await userModel.find();
+  return users;
 };
