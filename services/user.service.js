@@ -79,3 +79,8 @@ module.exports.getAllUsers = async () => {
   const users = await userModel.find();
   return users;
 };
+
+module.exports.updateUser = async (id, details) => {
+  const user = await userModel.findByIdAndUpdate(id, details, { new: true });
+  return user;
+};
