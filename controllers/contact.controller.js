@@ -34,8 +34,12 @@ const createContact = async (req, res) => {
 
 const updateContact = async (req, res) => {
   try {
-    const contact = await contactService.updateContact(req, req.body);
-
+    console.log(req.params.id)
+    const contact = await contactService.updateContact(
+      req.user.sub,
+      req.body,
+      req.params.id
+    );
     if (contact.error) {
       res.json({ status: false, message: contact.error });
     } else {
@@ -55,7 +59,7 @@ const deleteContact = async (req, res) => {
   try {
     const success = await contactService.deleteContact(req);
     if (success.error) {
-      res.json({ status: false, message: " Not Deleted" });
+      res.json({ status: false, message: "No Contact Found" });
     } else {
       res.json({ status: true, message: " Deleted Successfully" });
     }

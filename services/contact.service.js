@@ -14,7 +14,8 @@ const model = require("../models/contact.model");
 //     });
 // };
 module.exports.getAllContacts = async (req) =>{
-  const users =  await model.find({user_id : req.sub});
+  console.log(req.user.sub)
+  const users =  await model.find({user_id : req.user.sub});
   return users;
 }; 
 
@@ -26,7 +27,6 @@ module.exports.createContact = async (details) => {
       contact_number: details.body.contact_number,
       email: details.body.email,
     });
-    console.log(data);
     await data.save();
     return data;
   } catch (error) {
@@ -34,20 +34,20 @@ module.exports.createContact = async (details) => {
   }
 };
 
-module.exports.updateContact = async (req, details) => {
+module.exports.updateContact = async (userId ,contactBody,contactId) => {
   try {
-    const contact = await model.findById(req.params.id);
+    const contact = await model.findById(contactId);
     if (!contact) {
       return {
         error: "Contact not found",
       };
     }
-    if (req.user.userExist.id !== contact.user_id.toString()) {
+    if (userId !== contact.user_id.toString()) {
       return {
         error: "user don't have permission to edit this contact",
       };
     }
-    const data = await model.findByIdAndUpdate(req.params.id, details, {
+    const data = await model.findByIdAndUpdate(contactId, contactBody, {
       new: true,
     });
     return data;
@@ -65,7 +65,7 @@ module.exports.deleteContact = async (req) => {
         error: "Contact not found",
       };
     }
-    if (req.user.userExist.id !== contact.user_id.toString()) {
+    if (req.user.sub !== contact.user_id.toString()) {
       return {
         error: "user don't have permission to delete this contact",
       };
