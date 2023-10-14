@@ -34,7 +34,7 @@ const createContact = async (req, res) => {
 
 const updateContact = async (req, res) => {
   try {
-    console.log(req.params.id)
+    console.log(req.params.id);
     const contact = await contactService.updateContact(
       req.user.sub,
       req.body,

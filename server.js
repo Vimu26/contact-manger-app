@@ -5,7 +5,7 @@ const cors = require("cors");
 const users = require("./routes/users.routes");
 const contacts = require("./routes/contact.routes");
 require("dotenv").config();
-const bearerToken = require('express-bearer-token');
+const bearerToken = require("express-bearer-token");
 
 mongoose
   .connect("mongodb://127.0.0.1:27017/contact-manager-app", {
