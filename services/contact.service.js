@@ -1,27 +1,32 @@
 const model = require("../models/contact.model");
 
-module.exports.getAllContacts = (req) => {
-  return model
-    .find({ user_id: req.user.userExist.id })
-    .then((contacts) => {
-      if (contacts.length === 0) {
-        console.log("No contacts found");
-      }
-      return contacts;
-    })
-    .catch((error) => {
-      throw error;
-    });
-};
+// module.exports.getAllContacts = (req) => {
+//   return model
+//     .find({ user_id: req.user.userExist.id })
+//     .then((contacts) => {
+//       if (contacts.length === 0) {
+//         console.log("No contacts found");
+//       }
+//       return contacts;
+//     })
+//     .catch((error) => {
+//       throw error;
+//     });
+// };
+module.exports.getAllContacts = async (req) =>{
+  const users =  await model.find({user_id : req.sub});
+  return users;
+}; 
 
 module.exports.createContact = async (details) => {
   try {
     const data = new model({
-      user_id: details.user.userExist.id,
+      user_id: details.user.sub,
       name: details.body.name,
       contact_number: details.body.contact_number,
       email: details.body.email,
     });
+    console.log(data);
     await data.save();
     return data;
   } catch (error) {
