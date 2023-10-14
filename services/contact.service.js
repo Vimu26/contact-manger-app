@@ -13,11 +13,11 @@ const model = require("../models/contact.model");
 //       throw error;
 //     });
 // };
-module.exports.getAllContacts = async (req) =>{
-  console.log(req.user.sub)
-  const users =  await model.find({user_id : req.user.sub});
+module.exports.getAllContacts = async (req) => {
+  console.log(req.user.sub);
+  const users = await model.find({ user_id: req.user.sub });
   return users;
-}; 
+};
 
 module.exports.createContact = async (details) => {
   try {
@@ -34,7 +34,7 @@ module.exports.createContact = async (details) => {
   }
 };
 
-module.exports.updateContact = async (userId ,contactBody,contactId) => {
+module.exports.updateContact = async (userId, contactBody, contactId) => {
   try {
     const contact = await model.findById(contactId);
     if (!contact) {
