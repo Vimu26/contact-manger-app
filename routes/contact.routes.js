@@ -10,6 +10,6 @@ router.post("/",validateToken.validateToken,contactController.createContact);
 router.patch("/:id",validateToken.validateToken,contactController.updateContact);
 router.delete("/:id",validateToken.validateToken,contactController.deleteContact);
 
-// router.get("/:id",contactController.getcontactControllersFunction);
+// router.get("/:id",contactController.getContactControllersFunction);
 
 // router.use(validateToken.validateToken)

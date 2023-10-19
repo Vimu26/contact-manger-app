@@ -14,4 +14,4 @@ router.get(
   userController.currentUserController
 );
 router.patch("/:id", userController.updateUserControllersFunction);
-// router.delete("/:id",userController.deleteUserControllersFunction);
+router.delete("/:id", validateToken.validateToken,userController.deleteUserControllersFunction);

@@ -56,8 +56,21 @@ const updateUserControllersFunction = async (req, res) => {
       data: user,
     });
   } catch (err) {
-    console.error("An error occurred", error.message);
-    res.status(500).json({ status: false, message: error.message });
+    console.error("An error occurred", err.message);
+    res.status(500).json({ status: false, message: err.message });
+  }
+};
+const deleteUserControllersFunction = async (req, res) => {
+  try {
+    const deletedUser = await userService.deleteUser(req.params.id);
+    res.status(200).json({
+      status: true,
+      message: "User Deleted Successfully",
+      data: deletedUser,
+    });
+  } catch (err) {
+    console.error("An error occurred", err.message);
+    res.status(500).json({ status: false, message: err.message });
   }
 };
 
@@ -67,4 +80,5 @@ module.exports = {
   currentUserController,
   getAllUserController,
   updateUserControllersFunction,
+  deleteUserControllersFunction,
 };
