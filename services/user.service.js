@@ -84,3 +84,7 @@ module.exports.updateUser = async (id, details) => {
   const user = await userModel.findByIdAndUpdate(id, details, { new: true });
   return user;
 };
+
+module.exports.deleteUser = async (id) => {
+  return userDetailsModel.findByIdAndDelete(id);
+};
