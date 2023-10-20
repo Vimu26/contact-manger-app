@@ -20,13 +20,9 @@ const getAllUserController = async (req, res) => {
 const registerController = async (req, res) => {
   try {
     const user = await userService.registerService(req.body);
-    if (user.error) {
-      res.status(user.status).json({ error: user.error });
-    } else {
-      res.json({ message: "Register User", data: user });
-    }
+    res.json({ status: true, message: "Register User", data: user });
   } catch (err) {
-    res.status(err.status).json({ error: err.error });
+    res.status(500).json({ status: false, message: err.message });
   }
 };
 

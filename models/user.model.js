@@ -1,24 +1,27 @@
-const mongoose = require("mongoose");
+const { Schema, model } = require("mongoose");
+const schemaValidationMiddleware = require("../middleware/schema-validation.middleware");
 
-const userSchema = new mongoose.Schema(
+const userSchema = Schema(
   {
     user_name: {
       type: String,
-      required: [true, "user name is required"],
+      required: true,
     },
     email: {
       type: String,
-      required: [true, "email is required"],
-      unique: [true, "email is unique"],
+      required: true,
+      unique: true,
     },
     password: {
       type: String,
-      required: [true, "password is required"],
+      required: true,
     },
   },
   {
     timestamps: true,
-  }
+  },
 );
 
-module.exports = new mongoose.model("user", userSchema);
+// userSchema.pre("save", schemaValidationMiddleware.usersSchemaValidation )
+
+module.exports = new model("user", userSchema);
