@@ -38,7 +38,7 @@ const updateContact = async (req, res) => {
     const contact = await contactService.updateContact(
       req.user.sub,
       req.body,
-      req.params.id
+      req.params.id,
     );
     if (contact.error) {
       res.json({ status: false, message: contact.error });

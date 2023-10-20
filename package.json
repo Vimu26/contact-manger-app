@@ -5,12 +5,17 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "npm install",
+    "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\""
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "ajv": "^8.12.0",
+    "ajv-formats": "^2.1.1",
     "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
@@ -18,5 +23,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.5.2",
     "nodemon": "^3.0.1"
+  },
+  "devDependencies": {
+    "prettier": "^3.0.3"
   }
 }

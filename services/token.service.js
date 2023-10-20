@@ -15,7 +15,7 @@ module.exports.generateToken = async (existingUser) => {
         email: existingUser.email,
       },
     },
-    process.env.ACCESS_TOKEN_SECRET
+    process.env.ACCESS_TOKEN_SECRET,
   );
   return accessToken;
 };
