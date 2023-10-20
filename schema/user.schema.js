@@ -1,4 +1,4 @@
-const us = {
+const registerUser = {
   type: "object",
 
   properties: {
@@ -17,4 +17,19 @@ const us = {
   additionalProperties: false,
 };
 
-module.exports = { us };
+const loginUser = {
+  type: "object",
+
+  properties: {
+    email: { type: "string", format: "email" },
+    password: {
+      type: "string",
+      minLength: 6,
+    },
+  },
+  required: ["email", "password"],
+
+  additionalProperties: false,
+};
+
+module.exports = { registerUser, loginUser };

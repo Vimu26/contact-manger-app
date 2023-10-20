@@ -9,18 +9,22 @@ const schemaValidation = require("../middleware/schema-validation.middleware");
 router.get("/", userController.getAllUserController);
 router.post(
   "/register",
-  schemaValidation.usersSchemaValidation,
-  userController.registerController,
+  schemaValidation.usersLoginSchemaValidation,
+  userController.registerController
 );
-router.post("/login", userController.loginUserController);
+router.post(
+  "/login",
+  schemaValidation.usersLoginSchemaValidation,
+  userController.loginUserController
+);
 router.get(
   "/current",
   validateToken.validateToken,
-  userController.currentUserController,
+  userController.currentUserController
 );
 router.patch("/:id", userController.updateUserControllersFunction);
 router.delete(
   "/:id",
   validateToken.validateToken,
-  userController.deleteUserControllersFunction,
+  userController.deleteUserControllersFunction
 );
