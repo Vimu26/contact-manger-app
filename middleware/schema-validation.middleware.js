@@ -1,19 +1,14 @@
-const Ajv = require("ajv");
-const addFormats = require("ajv-formats");
-const ajv = new Ajv({ allErrors: true });
-addFormats(ajv);
-// const userSchema = require("../schema/userSchema.json");
-const us = require ("../schema/user.schema")
-userSchema = us.us;
+const ajvFormat = require("../services/ajv.json.format.service");
+const userSchema = require("../schema/user.schema");
 
-const validateUser = ajv.compile(userSchema);
+const validateUser = ajvFormat.ajv.compile(userSchema.us);
 
 const usersSchemaValidation = (req, res, next) => {
-  const valid = validateUser(req.body);
-  if (!valid) {
+  const isValid = validateUser(req.body);
+  if (!isValid) {
     return res.status(400).json({
       status: false,
-      message: "Validation Error",
+      message: "Error Occurs In Validation of the request body",
       error: validateUser.errors,
     });
   }

@@ -28,13 +28,11 @@ module.exports.validateToken = async (req, res, next) => {
   } else {
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
       if (err) {
-        res
-          .status(401)
-          .json({
-            status: true,
-            Error: err,
-            message: "Token is Invalid Or Expired",
-          });
+        res.status(401).json({
+          status: true,
+          Error: err,
+          message: "Token is Invalid Or Expired",
+        });
       } else {
         // If the token is valid, you can store the decoded data in the request for later use
         req.user = decoded;
