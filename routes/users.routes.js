@@ -10,21 +10,21 @@ router.get("/", userController.getAllUserController);
 router.post(
   "/register",
   schemaValidation.usersLoginSchemaValidation,
-  userController.registerController
+  userController.registerController,
 );
 router.post(
   "/login",
   schemaValidation.usersLoginSchemaValidation,
-  userController.loginUserController
+  userController.loginUserController,
 );
 router.get(
-  "/current",
+  "/profile",
   validateToken.validateToken,
-  userController.currentUserController
+  userController.currentUserController,
 );
 router.patch("/:id", userController.updateUserControllersFunction);
 router.delete(
   "/:id",
   validateToken.validateToken,
-  userController.deleteUserControllersFunction
+  userController.deleteUserControllersFunction,
 );

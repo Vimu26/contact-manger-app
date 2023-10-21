@@ -18,6 +18,6 @@ router.delete(
   contactController.deleteContact,
 );
 
-// router.get("/:id",contactController.getContactControllersFunction);
+router.get("/:id", contactController.getSingleContact);
 
 // router.use(validateToken.validateToken)

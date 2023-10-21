@@ -68,10 +68,24 @@ const deleteContact = async (req, res) => {
     res.status(500).json({ status: false, message: "An error occurred" });
   }
 };
+const getSingleContact = async (req, res) => {
+  try {
+    const contact = await contactService.getSingleContact(req.params.id);
+    res.json({
+      status: false,
+      message: "Contact Found Successfully",
+      data: contact,
+    });
+  } catch (error) {
+    console.error("An error occurred:", error);
+    res.status(500).json({ status: false, message: "An error occurred" });
+  }
+};
 
 module.exports = {
   getAllContacts,
   createContact,
   updateContact,
   deleteContact,
+  getSingleContact,
 };

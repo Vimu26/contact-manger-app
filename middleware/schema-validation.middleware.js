@@ -27,7 +27,7 @@ const usersLoginSchemaValidation = (req, res, next) => {
   next();
 };
 
-
 module.exports = {
-  usersRegisterSchemaValidation, usersLoginSchemaValidation
+  usersRegisterSchemaValidation,
+  usersLoginSchemaValidation,
 };

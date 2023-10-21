@@ -14,9 +14,13 @@ const model = require("../models/contact.model");
 //     });
 // };
 module.exports.getAllContacts = async (req) => {
-  console.log(req.user.sub);
-  const users = await model.find({ user_id: req.user.sub });
-  return users;
+  const contacts = await model.find({ user_id: req.user.sub });
+  return contacts;
+};
+
+module.exports.getSingleContact = async (id) => {
+  const contact = await model.findById(id);
+  return contact;
 };
 
 module.exports.createContact = async (details) => {
