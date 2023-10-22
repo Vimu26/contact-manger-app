@@ -29,10 +29,17 @@ const registerController = async (req, res) => {
 const loginUserController = async (req, res) => {
   try {
     const user = await userService.loginService(req.body);
-    if (user.error) {
-      res.status(user.status).json({ error: user.error });
-    } else {
+    console.log(user)
+    if(user){
       res.status(200).json({ message: "login Successful", data: user });
+    }
+    else{
+      if (user.error.status === 400) {
+          res.status(user.status).json({ error: user.error });
+        } 
+        else {
+          res.status(user.status).json({ error: user.error });
+        }
     }
   } catch (err) {
     res.status(err.status).json({ error: err.error });
