@@ -16,7 +16,6 @@ module.exports.registerService = async (details) => {
 
 module.exports.loginService = async (data) => {
   try {
-    if (data.email && data.password) {
       const userExist = await userModel.findOne({ email: data.email });
       if (!userExist) {
         return {
@@ -32,12 +31,13 @@ module.exports.loginService = async (data) => {
         const accessToken = await tokenService.generateToken(userExist);
         return accessToken;
       }
-    } else {
-      return {
-        error: "Fields are Required",
-        status: 500,
-      };
-    }
+      else{
+        return {
+          error : "Password Is InCorrect",
+          status : 401
+        }
+       
+      }
   } catch (error) {
     console.log(error.message);
     return {

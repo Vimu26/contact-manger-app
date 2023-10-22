@@ -20,7 +20,7 @@ const userSchema = Schema(
   },
   {
     timestamps: true,
-  },
+  }
 );
 
 // userSchema.pre("save", schemaValidationMiddleware.usersSchemaValidation )
