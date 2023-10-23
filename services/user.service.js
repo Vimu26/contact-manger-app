@@ -15,34 +15,22 @@ module.exports.registerService = async (details) => {
 };
 
 module.exports.loginService = async (data) => {
-  try {
-      const userExist = await userModel.findOne({ email: data.email });
-      if (!userExist) {
-        return {
-          error: "No User Found",
-          status: 400,
-        };
-      }
-      //compare the email and password
-      if (
-        userExist &&
-        (await bcrypt.compare(data.password, userExist.password))
-      ) {
-        const accessToken = await tokenService.generateToken(userExist);
-        return accessToken;
-      }
-      else{
-        return {
-          error : "Password Is InCorrect",
-          status : 401
-        }
-       
-      }
-  } catch (error) {
-    console.log(error.message);
+  const userExist = await userModel.findOne({ email: data.email });
+  if (!userExist) {
     return {
-      error: error.message,
-      status: 500,
+      error: "No User Found",
+      status: 400,
+    };
+  }
+  //compare the email and password
+  const isValid = await passwordService.comparePassword(data.password , userExist.password)
+  if (userExist && isValid) {
+    const accessToken = await tokenService.generateToken(userExist);
+    return accessToken;
+  } else {
+    return {
+      error: "Password Is InCorrect",
+      status: 401,
     };
   }
 };
