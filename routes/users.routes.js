@@ -9,7 +9,7 @@ const schemaValidation = require("../middleware/schema-validation.middleware");
 router.get("/", userController.getAllUserController);
 router.post(
   "/register",
-  schemaValidation.usersLoginSchemaValidation,
+  schemaValidation.usersRegisterSchemaValidation,
   userController.registerController,
 );
 router.post(

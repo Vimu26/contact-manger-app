@@ -1,6 +1,6 @@
 const model = require("../models/contact.model");
 
-xports.getAllContacts = async (req) => {
+module.exports.getAllContacts = async (req) => {
   const contacts = await model.find({ user_id: req.user.sub });
   return contacts;
 };
