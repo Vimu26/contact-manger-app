@@ -18,31 +18,32 @@ module.exports.loginService = async (data) => {
   const userExist = await userModel.findOne({ email: data.email });
   if (!userExist) {
     return {
-      error: "No User Found",
+      error: "User Not Found",
       status: 400,
     };
   }
   //compare the email and password
-  const isValid = await passwordService.comparePassword(data.password , userExist.password)
+  const isValid = await passwordService.comparePassword(
+    data.password,
+    userExist.password
+  );
   if (userExist && isValid) {
     const accessToken = await tokenService.generateToken(userExist);
     return accessToken;
   } else {
     return {
-      error: "Password Is InCorrect",
+      error: "Invalid Credentials",
       status: 401,
     };
   }
 };
 
 module.exports.getAllUsers = async () => {
-  const users = await userModel.find();
-  return users;
+  return await userModel.find();
 };
 
 module.exports.updateUser = async (id, details) => {
-  const user = await userModel.findByIdAndUpdate(id, details, { new: true });
-  return user;
+  return await userModel.findByIdAndUpdate(id, details, { new: true });
 };
 
 module.exports.deleteUser = async (id) => {
